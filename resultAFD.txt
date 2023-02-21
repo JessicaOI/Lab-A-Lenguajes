@@ -1,0 +1,5 @@
+A, ERROR
+ ' ',  'a', 'b'
+A
+
+(A, 'b', ERROR), (A,  ' ', ERROR), (A,  'a', ERROR)
