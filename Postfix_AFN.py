@@ -3,6 +3,7 @@
 import numpy as np
 from copy import deepcopy
 from graphviz import Digraph
+import re
 
 
 #stack para hacer las acciones del postfix
@@ -27,6 +28,10 @@ class Stack:
 
 
 def reescribiendoExpr(regex):
+    if re.search(r"\s", regex):
+        print("La expresión regular no puede contener espacios.")
+        return
+
     regex = regex.replace('ϵ',' ') 
     # definimos ϵ como vacio
     # y definimos que coloque . donde hay concatenaciones, en el resto no
@@ -55,26 +60,37 @@ def topostfix(regex):
     lista = list(regex)
     output = []
 
-    stack = Stack()
+    stack = []
 
     for item in lista:
+        
         if (item.isalpha() or item.isdigit() or item == ' '):
             output.append(item)
         elif (item == '('):
-            stack.push(item)
+            stack.append(item)
         elif (item == ')'):
-            top = stack.pop()
-            while(top != '('):
-                output.append(top)
+            try:
                 top = stack.pop()
+                while(top != '('):
+                    output.append(top)
+                    top = stack.pop()
+            except IndexError:
+                print("Error de sintaxis: paréntesis sin cerrar")
+                return
         else:
-            while (not stack.empty()) and (jerar[stack.peek()] >= jerar[item]):
+            while (len(stack) > 0 and jerar[stack[-1]] >= jerar[item]):
                   output.append(stack.pop())
-            stack.push(item)
-    while(not stack.empty()):
+            stack.append(item)
+    
+    while(len(stack) > 0):
+        if stack[-1] in ['(', ')']:
+            print("Error de sintaxis: paréntesis sin cerrar")
+            return
         output.append(stack.pop())
     
     return ''.join(output)
+
+
 #termina todo relacionado con postfix
 
 #AFN
@@ -305,7 +321,7 @@ def evaluatePostfix(regex):
     # agregar estados al grafo
     for state in afn.estados:
         if state == afn.estadoInicial:
-            dot.node(str(state), "Inicio", shape="circle")
+            dot.node(str(state), "Inicio (0)", shape="circle")
         elif state == afn.estadoFinal:
             dot.node(str(state), shape="doublecircle")
         else:
@@ -364,8 +380,11 @@ def ejecutar(regex):
 
 
 # INGRESANDO EXPRESION REGULAR A TRABAJAR
-# result = ejecutar('(b|b)*abb(a|b)*')
 
 result = ejecutar('b*(abb*)(a|ϵ)')
+# result = ejecutar('+a')
+# result = ejecutar('a b')
+# result = ejecutar('(ab)(a')
+# result = ejecutar('++a')
+# result = ejecutar('(a|b)*c')
 
-#result = ejecutar('b*(abb*)(a|ϵ)')

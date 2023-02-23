@@ -1,6 +1,6 @@
 digraph {
 	rankdir=LR
-	0 [label=Inicio shape=circle]
+	0 [label="Inicio (0)" shape=circle]
 	1
 	2
 	3
