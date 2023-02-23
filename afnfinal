@@ -4,11 +4,32 @@ digraph {
 	1
 	2
 	3
-	4 [shape=doublecircle]
-	0 -> 1 [label=a]
-	1 -> 2 [label="ε"]
-	1 -> 4 [label="ε"]
-	2 -> 3 [label=b]
-	3 -> 2 [label="ε"]
-	3 -> 4 [label="ε"]
+	4
+	5
+	6
+	7
+	8
+	9
+	10
+	11
+	12
+	13 [shape=doublecircle]
+	0 -> 1 [label="ε"]
+	0 -> 3 [label="ε"]
+	1 -> 2 [label=b]
+	2 -> 1 [label="ε"]
+	2 -> 3 [label="ε"]
+	3 -> 4 [label=a]
+	4 -> 5 [label=b]
+	5 -> 6 [label="ε"]
+	5 -> 8 [label="ε"]
+	6 -> 7 [label=b]
+	7 -> 6 [label="ε"]
+	7 -> 8 [label="ε"]
+	8 -> 9 [label="ε"]
+	8 -> 11 [label="ε"]
+	9 -> 10 [label=a]
+	11 -> 12 [label="ε"]
+	10 -> 13 [label="ε"]
+	12 -> 13 [label="ε"]
 }

@@ -351,17 +351,21 @@ def evaluatePostfix(regex):
 
 #Ejecutar Todo
 def ejecutar(regex):
-    print('\nExpresion regular ingresada: ' + regex)
-    regexprocess = reescribiendoExpr(regex)
-    postfix = topostfix(regexprocess)
-    print('Postfix: ' + postfix)
-    return evaluatePostfix(postfix)
+    try:
+        print('\nExpresion regular ingresada: ' + regex)
+        regexprocess = reescribiendoExpr(regex)
+        postfix = topostfix(regexprocess)
+        print('Postfix: ' + postfix)
+        return evaluatePostfix(postfix)
+    except:
+        print("La expresion regular ingresada es incorrecta revisela y vuela a intentar")
     
     
 
 
 # INGRESANDO EXPRESION REGULAR A TRABAJAR
 # result = ejecutar('(b|b)*abb(a|b)*')
-result = ejecutar('ab*')
+
+result = ejecutar('b*(abb*)(a|ϵ)')
 
 #result = ejecutar('b*(abb*)(a|ϵ)')
