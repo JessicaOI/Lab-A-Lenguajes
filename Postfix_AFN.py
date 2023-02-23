@@ -2,7 +2,8 @@
 
 import numpy as np
 from copy import deepcopy
-import time
+from graphviz import Digraph
+
 
 #stack para hacer las acciones del postfix
 class Stack:
@@ -295,6 +296,34 @@ def evaluatePostfix(regex):
                 stack.push(result)
     afn = AFN()
     afn = stack.pop()
+
+    #agregando graphviz para hacerlo visual
+    # generar archivo DOT
+    dot = Digraph()
+    dot.attr(rankdir='LR')  # configuración opcional para orientación del grafo
+
+    # agregar estados al grafo
+    for state in afn.estados:
+        if state == afn.estadoInicial:
+            dot.node(str(state), "Inicio", shape="circle")
+        elif state == afn.estadoFinal:
+            dot.node(str(state), shape="doublecircle")
+        else:
+            dot.node(str(state))
+
+    
+    # agregar transiciones al grafo
+    for transition in afn.transiciones:
+        for hacia in transition["hacia"]:
+            if(transition["=>"] == " "):
+                epsilon = 'ε'
+            else:
+                epsilon = str(transition["=>"])
+            dot.edge(str(transition["desde"]), str(hacia), label=epsilon)
+                
+    # guardar archivo DOT
+    dot.render('afnfinal', format='png')
+
     #print (afn)
     with open('resultadoAFN.txt', 'w') as f:
         for state in afn.estados:
@@ -332,6 +361,7 @@ def ejecutar(regex):
 
 
 # INGRESANDO EXPRESION REGULAR A TRABAJAR
-result = ejecutar('(b|b)*abb(a|b)*')
+# result = ejecutar('(b|b)*abb(a|b)*')
+result = ejecutar('ab*')
 
 #result = ejecutar('b*(abb*)(a|ϵ)')

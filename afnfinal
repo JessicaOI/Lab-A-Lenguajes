@@ -1,0 +1,14 @@
+digraph {
+	rankdir=LR
+	0 [label=Inicio shape=circle]
+	1
+	2
+	3
+	4 [shape=doublecircle]
+	0 -> 1 [label=a]
+	1 -> 2 [label="ε"]
+	1 -> 4 [label="ε"]
+	2 -> 3 [label=b]
+	3 -> 2 [label="ε"]
+	3 -> 4 [label="ε"]
+}
